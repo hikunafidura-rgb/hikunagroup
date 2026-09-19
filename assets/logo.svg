@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 220">
+  <defs>
+    <linearGradient id="hBlue" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#38BDF8"/>
+      <stop offset=".5" stop-color="#1D6FCE"/>
+      <stop offset="1" stop-color="#0A2351"/>
+    </linearGradient>
+    <linearGradient id="hNavy" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#1B2F5B"/>
+      <stop offset="1" stop-color="#060D24"/>
+    </linearGradient>
+  </defs>
+  <!-- Left pillar -->
+  <path d="M30 35 L75 15 L75 185 L30 205 Z" fill="url(#hNavy)"/>
+  <!-- Right pillar -->
+  <path d="M125 185 L125 15 L170 35 L170 205 L125 185 Z" fill="url(#hNavy)"/>
+  <!-- Ribbon -->
+  <path d="M30 120 C55 118 60 100 85 96 C110 92 120 88 130 70 L170 50 L170 90 C150 110 130 118 105 122 C80 126 55 132 30 160 Z" fill="url(#hBlue)"/>
+  <!-- Wordmark -->
+  <text x="100" y="212" text-anchor="middle" font-family="Arial, sans-serif" font-weight="800" font-size="17" letter-spacing="6" fill="#0A1930">HIKUNA</text>
+</svg>
