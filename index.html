@@ -123,7 +123,7 @@
     <p class="eyebrow reveal">Our Companies</p>
     <div class="sec-head">
       <h2 class="reveal">An ecosystem of businesses built for different opportunities.</h2>
-      <p class="muted reveal sec-side">Six companies, each with its own focus — united under one group vision.</p>
+      <p class="muted reveal sec-side">Six businesses.<br />One ecosystem.</p>
     </div>
     <!-- Dirender dari COMPANIES config di script.js: tambah perusahaan baru cukup tambah object -->
     <div id="companyList"></div>
@@ -135,20 +135,13 @@
   <div class="container">
     <p class="eyebrow eyebrow-light reveal">Company Ecosystem</p>
     <h2 class="reveal">One group,<br />many possibilities.</h2>
-    <div class="eco-panel reveal">
-      <div class="eco-center">
+    <div class="eco-flow reveal">
+      <div class="eco-parent">
         <img src="assets/logo.png" alt="HIKUNA GROUP Logo" />
         <div><strong>HIKUNA GROUP</strong><span>Holding Company</span></div>
       </div>
-      <svg class="eco-lines" viewBox="0 0 1000 180" preserveAspectRatio="none" aria-hidden="true">
-        <path d="M500 20 L90 150" />
-        <path d="M500 20 L280 150" />
-        <path d="M500 20 L440 150" />
-        <path d="M500 20 L560 150" />
-        <path d="M500 20 L720 150" />
-        <path d="M500 20 L910 150" />
-      </svg>
-      <ul class="eco-nodes">
+      <span class="eco-stem" aria-hidden="true"></span>
+      <ul class="eco-children">
         <li><strong>HIKUNA Hospital</strong><span>Healthcare</span></li>
         <li><strong>Gule Barokah</strong><span>Business</span></li>
         <li><strong>Amanah Jaya</strong><span>Business</span></li>
@@ -165,24 +158,8 @@
   <div class="container">
     <p class="eyebrow eyebrow-light reveal">Selected Ventures</p>
     <h2 class="reveal">Work that speaks for the group.</h2>
-    <div class="venture-grid">
-      <article class="venture">
-        <div class="venture-media reveal-img"><img src="https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?q=80&w=1200&auto=format&fit=crop" alt="HIKUNA Hospital building" loading="lazy" /></div>
-        <div class="venture-info reveal" data-delay="100"><div><span>Healthcare — Flagship</span><h3>HIKUNA Hospital</h3></div><a href="#companies" aria-label="View HIKUNA Hospital">→</a></div>
-      </article>
-      <article class="venture">
-        <div class="venture-media reveal-img"><img src="https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=1200&auto=format&fit=crop" alt="HIKUNA Digital technology" loading="lazy" /></div>
-        <div class="venture-info reveal" data-delay="100"><div><span>Digital Technology</span><h3>HIKUNA Digital</h3></div><a href="#companies" aria-label="View HIKUNA Digital">→</a></div>
-      </article>
-      <article class="venture">
-        <div class="venture-media reveal-img"><img src="https://images.unsplash.com/photo-1561070791-2526d30994b5?q=80&w=1200&auto=format&fit=crop" alt="HIKUNA Creative studio work" loading="lazy" /></div>
-        <div class="venture-info reveal" data-delay="100"><div><span>Creative &amp; Branding</span><h3>HIKUNA Creative</h3></div><a href="#companies" aria-label="View HIKUNA Creative">→</a></div>
-      </article>
-      <article class="venture">
-        <div class="venture-media reveal-img"><img src="https://images.unsplash.com/photo-1531297484001-80022131f5a1?q=80&w=1200&auto=format&fit=crop" alt="HIKUNA Lab innovation" loading="lazy" /></div>
-        <div class="venture-info reveal" data-delay="100"><div><span>Innovation &amp; Technology</span><h3>HIKUNA Lab</h3></div><a href="#lab" aria-label="Explore HIKUNA Lab">→</a></div>
-      </article>
-    </div>
+    <!-- Dirender dari COMPANIES config di script.js: link otomatis memakai website perusahaan jika sudah ada -->
+    <div id="ventureList" class="v-index"></div>
   </div>
 </section>
 

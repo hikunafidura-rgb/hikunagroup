@@ -1,29 +1,54 @@
-/* HIKUNA GROUP — Companies Config
+/* HIKUNA GROUP — Companies Config (SATU-SATUNYA sumber data company)
    Tambah perusahaan baru: cukup tambah object di array ini.
-   Field opsional: logo (path file), featured + image (tampil besar). */
+   - logo: path file logo ("assets/xyz.png"), kosongkan jika belum ada.
+   - image: foto showcase (hanya untuk company yang visualnya sudah cocok).
+   - website: URL website perusahaan, KOSONGKAN ("") jika belum ada.
+     CTA otomatis: ada URL → link tab baru | kosong → label nonaktif, tanpa URL palsu.
+   - featured: satu company tampil besar di urutan pertama showcase. */
 const COMPANIES = [
   { name: "HIKUNA HOSPITAL", category: "Healthcare", logo: "", featured: true,
-    image: "https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?q=80&w=1200&auto=format&fit=crop",
+    image: "https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?q=80&w=1600&auto=format&fit=crop",
+    website: "",
     desc: "Modern healthcare services with professional standards and a premium patient experience." },
   { name: "GULE BAROKAH", category: "Business", logo: "",
+    image: "", website: "",
     desc: "A growing business unit within the HIKUNA GROUP ecosystem." },
   { name: "AMANAH JAYA", category: "Business", logo: "",
+    image: "", website: "",
     desc: "A business unit contributing to the group's growth across industries." },
   { name: "HIKUNA DIGITAL", category: "Digital Technology", logo: "",
+    image: "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=1200&auto=format&fit=crop",
+    website: "",
     desc: "Digital technology and solutions — products, platforms, and systems." },
   { name: "HIKUNA CREATIVE", category: "Creative & Branding", logo: "",
+    image: "https://images.unsplash.com/photo-1561070791-2526d30994b5?q=80&w=1200&auto=format&fit=crop",
+    website: "",
     desc: "Creative and branding — brand strategy, visual identity, and direction." },
   { name: "HIKUNA LAB", category: "Innovation & Technology", logo: "",
+    image: "https://images.unsplash.com/photo-1531297484001-80022131f5a1?q=80&w=1200&auto=format&fit=crop",
+    website: "",
     desc: "Innovation hub — new technologies, digital experiments, future opportunities." },
 ];
+
+/* Satu helper untuk semua link company. Jangan hardcode URL di tempat lain. */
+function companyLink(c, fallback) {
+  if (c.website) return { href: c.website, external: true };
+  return { href: fallback || "#contact", external: false };
+}
 
 const list = document.getElementById("companyList");
 let observer;
 
 function mark(c) {
-  return c.logo
-    ? `<img src="${c.logo}" alt="${c.name} logo" class="co-logo" />`
-    : "";
+  return c.logo ? `<img src="${c.logo}" alt="${c.name} logo" class="co-logo" />` : "";
+}
+
+function visitCTA(c) {
+  const link = companyLink(c);
+  if (link.external) {
+    return `<a class="co-link" href="${link.href}" target="_blank" rel="noopener">Visit Website <i>↗</i></a>`;
+  }
+  return `<span class="co-link is-off" aria-disabled="true">Visit Website <i>↗</i></span>`;
 }
 
 function renderCompanies() {
@@ -31,32 +56,61 @@ function renderCompanies() {
   const rest = COMPANIES.filter(c => c !== featured);
   const fi = COMPANIES.indexOf(featured);
   let html = `
-    <article class="co-featured reveal-fade">
-      <img src="${featured.image}" alt="${featured.name}" loading="lazy" class="reveal-img" />
-      <div class="co-featured-body reveal" data-delay="120">
-        <span class="co-index">${String(fi + 1).padStart(2, "0")} — Featured</span>
-        ${mark(featured)}
-        <h3>${featured.name}</h3>
-        <span class="co-cat">${featured.category}</span>
+    <article class="show-hero reveal-fade">
+      <div class="show-hero-img"><img src="${featured.image}" alt="${featured.name}" loading="lazy" class="reveal-img" /></div>
+      <div class="show-hero-body reveal" data-delay="120">
+        <span class="co-index">${String(fi + 1).padStart(2, "0")}</span>
+        <div>${mark(featured)}<h3>${featured.name}</h3><span class="co-cat">${featured.category}</span></div>
         <p>${featured.desc}</p>
-        <a class="co-link" href="#contact">View Company <i>→</i></a>
+        <div>${visitCTA(featured)}</div>
       </div>
     </article>`;
   html += rest.map(c => {
     const i = COMPANIES.indexOf(c);
-    const delay = Math.min(rest.indexOf(c) * 60, 180);
+    const pos = rest.indexOf(c);
+    const flip = pos % 2 === 1 ? " flip" : "";
+    const delay = Math.min(pos * 60, 180);
+    const media = c.image
+      ? `<div class="show-media reveal-img"><img src="${c.image}" alt="${c.name}" loading="lazy" /></div>`
+      : `<span class="ghost${flip ? " left" : ""}" aria-hidden="true">${String(i + 1).padStart(2, "0")}</span>`;
     return `
-    <a href="#contact" class="co-row reveal" data-delay="${delay}">
-      <span class="co-index">${String(i + 1).padStart(2, "0")}</span>
-      <div>${mark(c)}<h3>${c.name}</h3><span class="co-cat">${c.category}</span></div>
-      <p>${c.desc}</p>
-      <span class="co-arrow">→</span>
-    </a>`;
+    <article class="show${flip} reveal-fade">
+      ${media}
+      <div class="show-body reveal" data-delay="${delay}">
+        <span class="co-index">${String(i + 1).padStart(2, "0")}</span>
+        ${mark(c)}
+        <h3>${c.name}</h3>
+        <span class="co-cat">${c.category}</span>
+        <p>${c.desc}</p>
+        ${visitCTA(c)}
+      </div>
+    </article>`;
   }).join("");
-  list.innerHTML = html;
+  list.innerHTML = `<div class="showcase">${html}</div>`;
   observeReveals();
 }
+
+/* Selected Ventures — diambil dari config yang sama, bukan hardcode ganda. */
+function renderVentures() {
+  const picks = ["HIKUNA HOSPITAL", "HIKUNA DIGITAL", "HIKUNA CREATIVE", "HIKUNA LAB"]
+    .map(n => COMPANIES.find(c => c.name === n)).filter(Boolean);
+  const box = document.getElementById("ventureList");
+  if (!box) return;
+  box.innerHTML = picks.map((c, k) => {
+    const link = companyLink(c, c.name === "HIKUNA LAB" ? "#lab" : "#companies");
+    const ext = link.external ? ' target="_blank" rel="noopener"' : "";
+    const arrow = link.external ? "↗" : "→";
+    return `
+    <a class="v-row reveal" data-delay="${k * 60}" href="${link.href}"${ext} aria-label="${c.name}">
+      <span class="v-num">${String(k + 1).padStart(2, "0")}</span>
+      <div><h3>${c.name.charAt(0) + c.name.slice(1).toLowerCase()}</h3><span class="v-cat">${c.category}</span></div>
+      <span class="v-arrow">${arrow}</span>
+    </a>`;
+  }).join("");
+}
+
 renderCompanies();
+renderVentures();
 
 /* Loader — hilang saat load, maksimal 1.5 detik */
 function hideLoader() {
