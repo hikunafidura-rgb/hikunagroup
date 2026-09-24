@@ -31,9 +31,9 @@ function renderCompanies() {
   const rest = COMPANIES.filter(c => c !== featured);
   const fi = COMPANIES.indexOf(featured);
   let html = `
-    <article class="co-featured reveal">
-      <img src="${featured.image}" alt="${featured.name}" loading="lazy" />
-      <div class="co-featured-body">
+    <article class="co-featured reveal-fade">
+      <img src="${featured.image}" alt="${featured.name}" loading="lazy" class="reveal-img" />
+      <div class="co-featured-body reveal" data-delay="120">
         <span class="co-index">${String(fi + 1).padStart(2, "0")} — Featured</span>
         ${mark(featured)}
         <h3>${featured.name}</h3>
@@ -44,8 +44,9 @@ function renderCompanies() {
     </article>`;
   html += rest.map(c => {
     const i = COMPANIES.indexOf(c);
+    const delay = Math.min(rest.indexOf(c) * 60, 180);
     return `
-    <a href="#contact" class="co-row reveal">
+    <a href="#contact" class="co-row reveal" data-delay="${delay}">
       <span class="co-index">${String(i + 1).padStart(2, "0")}</span>
       <div>${mark(c)}<h3>${c.name}</h3><span class="co-cat">${c.category}</span></div>
       <p>${c.desc}</p>
@@ -86,7 +87,10 @@ function observeReveals() {
   observer = observer || new IntersectionObserver(entries => entries.forEach(e => {
     if (e.isIntersecting) { e.target.classList.add("visible"); observer.unobserve(e.target); }
   }), { threshold: 0.12 });
-  document.querySelectorAll(".reveal:not(.visible)").forEach(el => observer.observe(el));
+  document.querySelectorAll(".reveal:not(.visible),.reveal-fade:not(.visible),.reveal-img:not(.visible)").forEach(el => {
+    if (el.dataset.delay) el.style.transitionDelay = el.dataset.delay + "ms";
+    observer.observe(el);
+  });
 }
 observeReveals();
 

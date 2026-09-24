@@ -14,7 +14,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet" />
 <link rel="stylesheet" href="styles.css" />
-<noscript><style>#loader{display:none!important}.reveal{opacity:1!important;transform:none!important}</style></noscript>
+<noscript><style>#loader{display:none!important}.reveal,.reveal-fade{opacity:1!important;transform:none!important}.reveal-img{opacity:1!important;transform:none!important;clip-path:none!important}</style></noscript>
 </head>
 <body>
 
@@ -69,9 +69,13 @@
 <section id="home" class="hero">
   <img class="hero-photo" src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=2000&auto=format&fit=crop" alt="Modern corporate architecture" fetchpriority="high" />
   <div class="hero-shade" aria-hidden="true"></div>
+  <div class="hero-fade" aria-hidden="true"></div>
   <div class="container hero-inner">
-    <img src="assets/logo.png" alt="HIKUNA GROUP Logo" class="hero-logo reveal" />
-    <p class="hero-label reveal">Holding Company — Est. 2026</p>
+    <div class="hero-masthead reveal">
+      <img src="assets/logo.png" alt="HIKUNA GROUP Logo" class="hero-logo" />
+      <span class="mast-div" aria-hidden="true"></span>
+      <p class="hero-label">Holding Company — Est. 2026</p>
+    </div>
     <h1 class="reveal">Building Businesses,<br />Creating Possibilities.</h1>
     <p class="hero-sub reveal">HIKUNA GROUP is a modern holding company building businesses, brands, and innovative solutions across different industries.</p>
     <div class="hero-cta reveal">
@@ -162,21 +166,21 @@
     <p class="eyebrow eyebrow-light reveal">Selected Ventures</p>
     <h2 class="reveal">Work that speaks for the group.</h2>
     <div class="venture-grid">
-      <article class="venture reveal">
-        <div class="venture-media"><img src="https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?q=80&w=1200&auto=format&fit=crop" alt="HIKUNA Hospital building" loading="lazy" /></div>
-        <div class="venture-info"><div><span>Healthcare — Flagship</span><h3>HIKUNA Hospital</h3></div><a href="#companies" aria-label="View HIKUNA Hospital">→</a></div>
+      <article class="venture">
+        <div class="venture-media reveal-img"><img src="https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?q=80&w=1200&auto=format&fit=crop" alt="HIKUNA Hospital building" loading="lazy" /></div>
+        <div class="venture-info reveal" data-delay="100"><div><span>Healthcare — Flagship</span><h3>HIKUNA Hospital</h3></div><a href="#companies" aria-label="View HIKUNA Hospital">→</a></div>
       </article>
-      <article class="venture reveal">
-        <div class="venture-media"><img src="https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=1200&auto=format&fit=crop" alt="HIKUNA Digital technology" loading="lazy" /></div>
-        <div class="venture-info"><div><span>Digital Technology</span><h3>HIKUNA Digital</h3></div><a href="#companies" aria-label="View HIKUNA Digital">→</a></div>
+      <article class="venture">
+        <div class="venture-media reveal-img"><img src="https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=1200&auto=format&fit=crop" alt="HIKUNA Digital technology" loading="lazy" /></div>
+        <div class="venture-info reveal" data-delay="100"><div><span>Digital Technology</span><h3>HIKUNA Digital</h3></div><a href="#companies" aria-label="View HIKUNA Digital">→</a></div>
       </article>
-      <article class="venture reveal">
-        <div class="venture-media"><img src="https://images.unsplash.com/photo-1561070791-2526d30994b5?q=80&w=1200&auto=format&fit=crop" alt="HIKUNA Creative studio work" loading="lazy" /></div>
-        <div class="venture-info"><div><span>Creative &amp; Branding</span><h3>HIKUNA Creative</h3></div><a href="#companies" aria-label="View HIKUNA Creative">→</a></div>
+      <article class="venture">
+        <div class="venture-media reveal-img"><img src="https://images.unsplash.com/photo-1561070791-2526d30994b5?q=80&w=1200&auto=format&fit=crop" alt="HIKUNA Creative studio work" loading="lazy" /></div>
+        <div class="venture-info reveal" data-delay="100"><div><span>Creative &amp; Branding</span><h3>HIKUNA Creative</h3></div><a href="#companies" aria-label="View HIKUNA Creative">→</a></div>
       </article>
-      <article class="venture reveal">
-        <div class="venture-media"><img src="https://images.unsplash.com/photo-1531297484001-80022131f5a1?q=80&w=1200&auto=format&fit=crop" alt="HIKUNA Lab innovation" loading="lazy" /></div>
-        <div class="venture-info"><div><span>Innovation &amp; Technology</span><h3>HIKUNA Lab</h3></div><a href="#lab" aria-label="Explore HIKUNA Lab">→</a></div>
+      <article class="venture">
+        <div class="venture-media reveal-img"><img src="https://images.unsplash.com/photo-1531297484001-80022131f5a1?q=80&w=1200&auto=format&fit=crop" alt="HIKUNA Lab innovation" loading="lazy" /></div>
+        <div class="venture-info reveal" data-delay="100"><div><span>Innovation &amp; Technology</span><h3>HIKUNA Lab</h3></div><a href="#lab" aria-label="Explore HIKUNA Lab">→</a></div>
       </article>
     </div>
   </div>
@@ -196,7 +200,7 @@
       </div>
       <a href="#contact" class="text-link text-link-light reveal">Partner with Lab <span>→</span></a>
     </div>
-    <figure class="lab-figure reveal">
+    <figure class="lab-figure reveal-img">
       <img src="https://images.unsplash.com/photo-1487958449943-2429e8be8625?q=80&w=1200&auto=format&fit=crop" alt="Minimal modern architecture" loading="lazy" />
     </figure>
   </div>
@@ -221,10 +225,10 @@
 <!-- ============ STATS ============ -->
 <section class="section stats" aria-label="Company statistics">
   <div class="container stats-grid">
-    <div class="stat reveal"><strong><span class="count" data-target="6" data-pad="2">06</span></strong><span>Companies</span></div>
-    <div class="stat reveal"><strong><span class="count" data-target="1" data-pad="2">01</span></strong><span>Group</span></div>
-    <div class="stat reveal"><strong><span class="count" data-target="2026" data-pad="0">2026</span></strong><span>Founded</span></div>
-    <div class="stat reveal"><strong>∞</strong><span>Possibilities</span></div>
+    <div class="stat reveal-fade" data-delay="0"><strong><span class="count" data-target="6" data-pad="2">06</span></strong><span>Companies</span></div>
+    <div class="stat reveal-fade" data-delay="60"><strong><span class="count" data-target="1" data-pad="2">01</span></strong><span>Group</span></div>
+    <div class="stat reveal-fade" data-delay="120"><strong><span class="count" data-target="2026" data-pad="0">2026</span></strong><span>Founded</span></div>
+    <div class="stat reveal-fade" data-delay="180"><strong>∞</strong><span>Possibilities</span></div>
   </div>
 </section>
 
