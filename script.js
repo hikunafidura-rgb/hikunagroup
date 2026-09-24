@@ -17,6 +17,7 @@ const COMPANIES = [
 ];
 
 const grid = document.getElementById("companyGrid");
+let observer;
 function renderCompanies() {
   grid.innerHTML = COMPANIES.map((c, i) => `
     <article class="co-card reveal" style="transition-delay:${(i % 3) * 80}ms">
@@ -60,7 +61,6 @@ menu.querySelectorAll("a").forEach(a => a.addEventListener("click", () => {
 }));
 
 /* Reveal on scroll */
-let observer;
 function observeReveals() {
   observer = observer || new IntersectionObserver(es => es.forEach(e => {
     if (e.isIntersecting) { e.target.classList.add("visible"); observer.unobserve(e.target); }
