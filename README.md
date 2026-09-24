@@ -2,11 +2,9 @@
 
 Premium corporate holding company website. Dark, elegant, responsive.
 
-## Cara pakai logo asli
-1. Simpan logo yang diberikan sebagai: `assets/logo.png`
-   (file bawaannya saat ini memakai fallback otomatis, jadi website tetap bagus tanpa file ini)
-2. Refresh `index.html` — logo otomatis muncul di navbar, hero, footer, loader, ecosystem.
-3. Favicon memakai `assets/logo.svg` (sudah ada, boleh ganti dengan versi asli).
+## Logo
+Logo asli HIKUNA GROUP sudah terpasang sebagai `assets/logo.png` dan dipakai di
+navbar, hero, ecosystem, footer, loader, dan favicon. Jangan generate ulang.
 
 ## Tambah perusahaan baru
 Edit `script.js` → array `COMPANIES`, tambah object:

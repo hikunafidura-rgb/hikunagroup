@@ -1,51 +1,72 @@
 /* HIKUNA GROUP — Companies Config
-   Tambah perusahaan baru cukup tambah object di array ini.
-   Logo: isi `logo: "assets/nama-logo.png"`. Jika kosong, tampil monogram otomatis. */
+   Tambah perusahaan baru: cukup tambah object di array ini.
+   Field opsional: logo (path file), featured + image (tampil besar). */
 const COMPANIES = [
-  { name: "HIKUNA HOSPITAL", category: "Healthcare", mark: "H+", logo: "",
-    desc: "Layanan kesehatan modern dengan standar profesional dan pengalaman pasien yang premium." },
-  { name: "GULE BAROKAH", category: "Business", mark: "GB", logo: "",
-    desc: "Unit bisnis yang berkembang dalam ekosistem HIKUNA GROUP." },
-  { name: "AMANAH JAYA", category: "Business", mark: "AJ", logo: "",
-    desc: "Unit bisnis yang menjadi bagian dari pertumbuhan grup lintas industri." },
-  { name: "HIKUNA DIGITAL", category: "Digital Technology", mark: "HD", logo: "",
-    desc: "Digital technology & solutions — membangun produk, platform, dan sistem digital." },
-  { name: "HIKUNA CREATIVE", category: "Creative & Branding", mark: "HC", logo: "",
-    desc: "Creative & branding — strategi brand, visual identity, dan creative direction." },
-  { name: "HIKUNA LAB", category: "Innovation & Technology", mark: "LAB", logo: "",
-    desc: "Innovation hub — eksplorasi teknologi baru, eksperimen digital, dan peluang masa depan." },
+  { name: "HIKUNA HOSPITAL", category: "Healthcare", logo: "", featured: true,
+    image: "https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?q=80&w=1200&auto=format&fit=crop",
+    desc: "Modern healthcare services with professional standards and a premium patient experience." },
+  { name: "GULE BAROKAH", category: "Business", logo: "",
+    desc: "A growing business unit within the HIKUNA GROUP ecosystem." },
+  { name: "AMANAH JAYA", category: "Business", logo: "",
+    desc: "A business unit contributing to the group's growth across industries." },
+  { name: "HIKUNA DIGITAL", category: "Digital Technology", logo: "",
+    desc: "Digital technology and solutions — products, platforms, and systems." },
+  { name: "HIKUNA CREATIVE", category: "Creative & Branding", logo: "",
+    desc: "Creative and branding — brand strategy, visual identity, and direction." },
+  { name: "HIKUNA LAB", category: "Innovation & Technology", logo: "",
+    desc: "Innovation hub — new technologies, digital experiments, future opportunities." },
 ];
 
-const grid = document.getElementById("companyGrid");
+const list = document.getElementById("companyList");
 let observer;
+
+function mark(c) {
+  return c.logo
+    ? `<img src="${c.logo}" alt="${c.name} logo" class="co-logo" />`
+    : "";
+}
+
 function renderCompanies() {
-  grid.innerHTML = COMPANIES.map((c, i) => `
-    <article class="co-card reveal" style="transition-delay:${(i % 3) * 80}ms">
-      <div class="co-top">
-        ${c.logo
-          ? `<img src="${c.logo}" alt="${c.name} logo" class="co-mark" style="object-fit:contain;background:#fff;padding:4px" onerror="this.outerHTML='<div class=\\'co-mark\\'>${c.mark}</div>'" />`
-          : `<div class="co-mark">${c.mark}</div>`}
-        <span class="co-cat">${c.category}</span>
+  const featured = COMPANIES.find(c => c.featured) || COMPANIES[0];
+  const rest = COMPANIES.filter(c => c !== featured);
+  const fi = COMPANIES.indexOf(featured);
+  let html = `
+    <article class="co-featured reveal">
+      <img src="${featured.image}" alt="${featured.name}" loading="lazy" />
+      <div class="co-featured-body">
+        <span class="co-index">${String(fi + 1).padStart(2, "0")} — Featured</span>
+        ${mark(featured)}
+        <h3>${featured.name}</h3>
+        <span class="co-cat">${featured.category}</span>
+        <p>${featured.desc}</p>
+        <a class="co-link" href="#contact">View Company <i>→</i></a>
       </div>
-      <h3>${c.name}</h3>
+    </article>`;
+  html += rest.map(c => {
+    const i = COMPANIES.indexOf(c);
+    return `
+    <a href="#contact" class="co-row reveal">
+      <span class="co-index">${String(i + 1).padStart(2, "0")}</span>
+      <div>${mark(c)}<h3>${c.name}</h3><span class="co-cat">${c.category}</span></div>
       <p>${c.desc}</p>
-      <a class="co-link" href="#contact">View Company <i>→</i></a>
-      <span class="co-index">0${i + 1}</span>
-    </article>`).join("");
+      <span class="co-arrow">→</span>
+    </a>`;
+  }).join("");
+  list.innerHTML = html;
   observeReveals();
-  attachCardGlow();
 }
 renderCompanies();
 
-/* Loader */
-window.addEventListener("load", () => {
-  setTimeout(() => document.getElementById("loader").classList.add("hide"), 700);
-});
-setTimeout(() => document.getElementById("loader").classList.add("hide"), 3000);
+/* Loader — hilang saat load, maksimal 1.5 detik */
+function hideLoader() {
+  document.getElementById("loader").classList.add("hide");
+}
+window.addEventListener("load", () => setTimeout(hideLoader, 400));
+setTimeout(hideLoader, 1500);
 
-/* Navbar scroll */
+/* Navbar */
 const nav = document.getElementById("navbar");
-addEventListener("scroll", () => nav.classList.toggle("scrolled", scrollY > 30), { passive: true });
+addEventListener("scroll", () => nav.classList.toggle("scrolled", scrollY > 24), { passive: true });
 
 /* Mobile menu */
 const burger = document.getElementById("hamburger");
@@ -62,7 +83,7 @@ menu.querySelectorAll("a").forEach(a => a.addEventListener("click", () => {
 
 /* Reveal on scroll */
 function observeReveals() {
-  observer = observer || new IntersectionObserver(es => es.forEach(e => {
+  observer = observer || new IntersectionObserver(entries => entries.forEach(e => {
     if (e.isIntersecting) { e.target.classList.add("visible"); observer.unobserve(e.target); }
   }), { threshold: 0.12 });
   document.querySelectorAll(".reveal:not(.visible)").forEach(el => observer.observe(el));
@@ -81,45 +102,33 @@ addEventListener("scroll", () => {
   links.forEach(l => l.classList.toggle("active", l.getAttribute("href") === "#" + cur));
 }, { passive: true });
 
-/* Count up stats */
+/* Counters — HTML sudah berisi nilai final yang benar.
+   Animasi hanya pemanis dan SELALU berakhir tepat di target. */
+function animateCount(el) {
+  const target = parseInt(el.dataset.target, 10);
+  const pad = parseInt(el.dataset.pad || "0", 10);
+  if (matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    el.textContent = String(target).padStart(pad, "0");
+    return;
+  }
+  const dur = 1100, t0 = performance.now();
+  function fmt(n) { return String(n).padStart(pad, "0"); }
+  function tick(t) {
+    const p = Math.min((t - t0) / dur, 1);
+    const eased = 1 - Math.pow(1 - p, 3);
+    el.textContent = fmt(Math.round(target * eased));
+    if (p < 1) requestAnimationFrame(tick);
+    else el.textContent = fmt(target); /* kunci nilai akhir */
+  }
+  requestAnimationFrame(tick);
+}
 const counters = document.querySelectorAll(".count");
-const cObs = new IntersectionObserver(es => es.forEach(e => {
-  if (!e.isIntersecting) return;
-  const el = e.target, target = +el.dataset.target; let n = 0;
-  const t = setInterval(() => {
-    n++; el.textContent = String(n).padStart(2, "0");
-    if (n >= target) clearInterval(t);
-  }, 120);
-  cObs.unobserve(el);
-}), { threshold: 0.5 });
-counters.forEach(c => cObs.observe(c));
-
-/* Card spotlight follows mouse */
-function attachCardGlow() {
-  document.querySelectorAll(".co-card").forEach(card => {
-    card.addEventListener("mousemove", e => {
-      const r = card.getBoundingClientRect();
-      card.style.setProperty("--mx", (e.clientX - r.left) + "px");
-      card.style.setProperty("--my", (e.clientY - r.top) + "px");
-    });
-  });
+if ("IntersectionObserver" in window) {
+  const cObs = new IntersectionObserver(entries => entries.forEach(e => {
+    if (!e.isIntersecting) return;
+    animateCount(e.target);
+    cObs.unobserve(e.target);
+  }), { threshold: 0.3 });
+  counters.forEach(c => cObs.observe(c));
 }
-
-/* Subtle magnetic CTA */
-if (matchMedia("(pointer:fine)").matches) {
-  document.querySelectorAll(".magnetic").forEach(btn => {
-    btn.addEventListener("mousemove", e => {
-      const r = btn.getBoundingClientRect();
-      const x = (e.clientX - r.left - r.width / 2) * 0.08;
-      const y = (e.clientY - r.top - r.height / 2) * 0.15;
-      btn.style.transform = `translate(${x}px,${y}px)`;
-    });
-    btn.addEventListener("mouseleave", () => btn.style.transform = "");
-  });
-  /* Hero parallax orbs */
-  const orbs = document.querySelectorAll(".orb");
-  addEventListener("mousemove", e => {
-    const x = (e.clientX / innerWidth - 0.5), y = (e.clientY / innerHeight - 0.5);
-    orbs.forEach((o, i) => o.style.translate = `${x * (20 + i * 20)}px ${y * (20 + i * 20)}px`);
-  }, { passive: true });
-}
+/* Tanpa IntersectionObserver: biarkan nilai final di HTML apa adanya. */
